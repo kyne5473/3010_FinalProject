@@ -78,6 +78,29 @@ MainWindow::MainWindow(QWidget *parent)
     QString text = getPlayerName(currentPlayer) + "'s Turn";
     QGraphicsTextItem* textItem = new QGraphicsTextItem(text);
     scene->addItem(textItem);
+
+
+//    QWidget * wdg = new QWidget(this);
+//    QVBoxLayout *vlay = new QVBoxLayout(wdg);
+//    QPushButton *btn1 = new QPushButton("btn1");
+//    vlay->addWidget(btn1);
+////    wdg->setLayout(vlay);
+//    setCentralWidget(wdg);
+//    wdg->show();
+
+    QWidget *wdg = new QWidget;
+    QVBoxLayout *vlay = new QVBoxLayout(wdg);
+    voteYes = new QPushButton("Yes");
+    vlay->addWidget(voteYes);
+    QPushButton *voteNo = new QPushButton("No");
+    vlay->addWidget(voteNo);
+    wdg->setLayout(vlay);
+    wdg->show();
+
+    voteYes->setGeometry(QRect(QPoint(100, 100), QSize(200, 50)));
+
+    // Connect button signal to appropriate slot
+    connect(voteYes, &QPushButton::released, this, &MainWindow::yesClickedButton);
 }
 
 MainWindow::~MainWindow()
@@ -102,5 +125,35 @@ void MainWindow::on_voteYes_clicked()
 void MainWindow::on_vetoButton_clicked()
 {
 
+}
+
+void MainWindow::yesClickedButton()
+{
+    // change the text
+    voteYes->setText("Example");
+    // resize button
+    voteYes->resize(100,100);
+}
+
+void MainWindow::gameLoop(){
+    preisdentIndex += 1;
+    initiateVote();
+    showCards(showCards());
+    playCard();
+}
+
+int MainWindow::showCards(){
+
+}
+
+int MainWindow::showCards(int c){
+    switch (c){
+        case 0:
+
+        case 1:
+
+        case 2:
+
+    }
 }
 

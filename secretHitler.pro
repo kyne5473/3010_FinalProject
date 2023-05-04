@@ -10,12 +10,14 @@ CONFIG += c++17
 
 SOURCES += \
     card.cpp \
+    cardfactory.cpp \
     main.cpp \
     mainwindow.cpp \
     playerwindow.cpp
 
 HEADERS += \
     card.h \
+    cardfactory.h \
     mainwindow.h \
     playerwindow.h
 

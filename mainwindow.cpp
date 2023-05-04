@@ -105,9 +105,9 @@ MainWindow::MainWindow(QWidget *parent)
         myWindow->show();
     }
 
-//    connect(popup, &QPushButton::pressed, this, &MainWindow::button1);
-//    connect(this, &MainWindow::buttonPress2, this, &MainWindow::button2);
-//    connect(this, &MainWindow::buttonPress3, this, &MainWindow::button3);
+//    connect(buttonPress1, &QPushButton::clicked, this, &MainWindow::button1);
+//    connect(buttonPress2, &QPushButton::clicked, this, &MainWindow::button2);
+//    connect(buttonPress3, &QPushButton::clicked, this, &MainWindow::button3);
 
     QDialog *popup = new QDialog;
     popup->setWindowTitle("Vote");
@@ -244,6 +244,9 @@ void MainWindow::on_pushButton_clicked()
             buttonPress3 = new QPushButton("Facist");
             buttonPress3->setStyleSheet("background-color: red; color:white;");
         }
+        connect(buttonPress1, &QPushButton::clicked, this, &MainWindow::button1);
+        connect(buttonPress2, &QPushButton::clicked, this, &MainWindow::button2);
+        connect(buttonPress3, &QPushButton::clicked, this, &MainWindow::button3);
 
         layout->addWidget(buttonPress1);
         layout->addWidget(buttonPress2);

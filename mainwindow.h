@@ -6,6 +6,7 @@
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QPushButton>
+#include "playerwindow.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -40,12 +41,14 @@ public:
 
     int showCards(int c);
 
+    bool initiateVote();
+
+    void playCard();
+
+
 private slots:
-    void on_voteNo_clicked();
-
-    void on_voteYes_clicked();
-
-    void on_vetoButton_clicked();
+    void voteYes();
+    void voteNo();
 
 private:
     Ui::MainWindow *ui;
@@ -54,11 +57,12 @@ private:
     int totalPlayers = 0;
 
     QVector<QString> playerNames;
-    QVector<QString> playerRoles;
+    QVector<bool> playerRoles;
+    QVector<playerWindow*> windows;
+
+    int voteCount = 0;
 
     int preisdentIndex = -1;
-
-    QPushButton *voteYes;
 
     bool deck[17] = {0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1};
 

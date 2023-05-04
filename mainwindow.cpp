@@ -17,6 +17,7 @@
 #include <algorithm>
 #include <QVBoxLayout>
 #include <QTimer>
+#include "playerwindow.h"
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -26,7 +27,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     int numPlayers = QInputDialog::getInt(this, "Number of Players", "Number of Players:", 5,5,10);
-
     setTotalPlayers(numPlayers);
     for (int i = 0; i < numPlayers; i++) {
         QDialog dialog;
@@ -48,6 +48,20 @@ MainWindow::MainWindow(QWidget *parent)
             break;
         }
     }
+
+    int f = totalPlayers/2;
+    int count = totalPlayers;
+    for(int i = 0; i < totalPlayers; i++){
+        int num = rand() % count;
+        count--;
+        if(num < f){
+            playerRoles.push_back(true);
+            f--;
+        }else{
+            playerRoles.push_back(false);
+        }
+    }
+
 
     QGraphicsView * liberalView = ui->liberalsView;
     liberalView->setStyleSheet("background: transparent");
@@ -72,14 +86,6 @@ MainWindow::MainWindow(QWidget *parent)
     facistView->setScene(facistScene);
 
 
-    QGraphicsView* view = ui->playersTurn;
-    QGraphicsScene* scene = new QGraphicsScene(this);
-    view->setScene(scene);
-    QString text = getPlayerName(currentPlayer) + "'s Turn";
-    QGraphicsTextItem* textItem = new QGraphicsTextItem(text);
-    scene->addItem(textItem);
-
-
 //    QWidget * wdg = new QWidget(this);
 //    QVBoxLayout *vlay = new QVBoxLayout(wdg);
 //    QPushButton *btn1 = new QPushButton("btn1");
@@ -88,19 +94,14 @@ MainWindow::MainWindow(QWidget *parent)
 //    setCentralWidget(wdg);
 //    wdg->show();
 
-    QWidget *wdg = new QWidget;
-    QVBoxLayout *vlay = new QVBoxLayout(wdg);
-    voteYes = new QPushButton("Yes");
-    vlay->addWidget(voteYes);
-    QPushButton *voteNo = new QPushButton("No");
-    vlay->addWidget(voteNo);
-    wdg->setLayout(vlay);
-    wdg->show();
-
-    voteYes->setGeometry(QRect(QPoint(100, 100), QSize(200, 50)));
-
-    // Connect button signal to appropriate slot
-    connect(voteYes, &QPushButton::released, this, &MainWindow::yesClickedButton);
+    //create a view for each player
+    for(int i = 0; i < totalPlayers; i++){
+        playerWindow* myWindow = new playerWindow(i, playerRoles[i], playerNames[i]);
+        myWindow->setWindowTitle("Player: " + playerNames[i]);
+        windows.push_back(myWindow);
+        connect(myWindow, &playerWindow::yesPressed, this, &MainWindow::voteYes);
+        myWindow->show();
+    }
 }
 
 MainWindow::~MainWindow()
@@ -108,31 +109,12 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
-
-void MainWindow::on_voteNo_clicked()
-{
-
+void MainWindow::voteYes(){
+    voteCount++;
 }
 
-
-void MainWindow::on_voteYes_clicked()
-{
-
-}
-
-
-void MainWindow::on_vetoButton_clicked()
-{
-
-}
-
-void MainWindow::yesClickedButton()
-{
-    // change the text
-    voteYes->setText("Example");
-    // resize button
-    voteYes->resize(100,100);
+void MainWindow::voteNo(){
+    voteCount--;
 }
 
 void MainWindow::gameLoop(){
@@ -147,13 +129,24 @@ int MainWindow::showCards(){
 }
 
 int MainWindow::showCards(int c){
-    switch (c){
-        case 0:
+//    switch (c){
+//        case 0:
 
-        case 1:
+//        case 1:
 
-        case 2:
+//        case 2:
 
-    }
+//    }
+}
+
+bool MainWindow::initiateVote(){
+    QPushButton *yesButton = findChild<QPushButton*>("yesButton");
+    yesButton->setEnabled(true);
+
+    return true;
+}
+
+void MainWindow::playCard(){
+
 }
 

@@ -1,4 +1,7 @@
 #include "playerwindow.h"
+#include "mainwindow.h"
+#include <iostream>
+#include <QPushButton>
 
 playerWindow::playerWindow(int player, bool isFascist, QString n)
 {
@@ -36,14 +39,27 @@ playerWindow::playerWindow(int player, bool isFascist, QString n)
     yesButton->setFont(font);
 
     connect(yesButton, &QPushButton::clicked, this, &playerWindow::yesPressed);
+    connect(noButton, &QPushButton::clicked, this, &playerWindow::noPressed);
 
     resize(600,150);
 }
 
 void playerWindow::yesPressed(){
-
+    yesButton->setStyleSheet("background-color: gray; color:white;");
+    noButton->setStyleSheet("background-color: gray; color:white;");
+    yesButton->setEnabled(false);
+    noButton->setEnabled(false);
+    std::cout << "connect1" << std::endl;
+    vote = 1;
+//    this->close();
 }
 
 void playerWindow::noPressed(){
-
+    yesButton->setStyleSheet("background-color: gray; color:white;");
+    noButton->setStyleSheet("background-color: gray; color:white;");
+    yesButton->setEnabled(false);
+    noButton->setEnabled(false);
+    std::cout << "connect2" << std::endl;
+    vote = 0;
+//    this->close();
 }

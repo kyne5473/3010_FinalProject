@@ -100,8 +100,10 @@ MainWindow::MainWindow(QWidget *parent)
         myWindow->setWindowTitle("Player: " + playerNames[i]);
         windows.push_back(myWindow);
         connect(myWindow, &playerWindow::yesPressed, this, &MainWindow::voteYes);
+        connect(myWindow, &playerWindow::noPressed, this, &MainWindow::voteNo);
         myWindow->show();
     }
+//    initiateVote();
 }
 
 MainWindow::~MainWindow()
@@ -110,18 +112,21 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::voteYes(){
+    //Only gets called in initiateVote()
     voteCount++;
 }
 
 void MainWindow::voteNo(){
+    //Only gets called in initiateVote()
     voteCount--;
 }
 
 void MainWindow::gameLoop(){
     preisdentIndex += 1;
-    initiateVote();
-    showCards(showCards());
-    playCard();
+//    initiateVote();
+//    showCards(showCards());
+//    playCard();
+    std::cout << "Vote in loop: " << voteCount << std::endl;
 }
 
 int MainWindow::showCards(){
@@ -140,13 +145,28 @@ int MainWindow::showCards(int c){
 }
 
 bool MainWindow::initiateVote(){
-    QPushButton *yesButton = findChild<QPushButton*>("yesButton");
-    yesButton->setEnabled(true);
-
+    for(int i = 0; i < windows.size(); i ++){
+        if(windows[i]->getVote()){
+            voteYes();
+        }else if(windows[i]->getVote() == 0){
+            voteNo();
+        }
+    }
+    std::cout << "Votingas: " << voteCount << std::endl;
     return true;
 }
 
 void MainWindow::playCard(){
 
+}
+
+
+void MainWindow::on_pushButton_clicked()
+{
+    initiateVote();
+
+    std::cout << "End: " << voteCount << std::endl;
+    //Do something
+    //Then reset voteCount to 0
 }
 

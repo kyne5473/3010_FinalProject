@@ -45,10 +45,13 @@ public:
 
     void playCard();
 
+    void increaseVote(){voteCount ++;};
 
 private slots:
     void voteYes();
     void voteNo();
+
+    void on_pushButton_clicked();
 
 private:
     Ui::MainWindow *ui;

@@ -9,6 +9,7 @@ class playerWindow: public QWidget
     Q_OBJECT
 public:
     playerWindow(int player, bool isFascist, QString n);
+    int getVote(){return vote;};
 signals:
     void yesPressed();
     void noPressed();
@@ -23,6 +24,8 @@ private:
     int playerNum;
     bool fascist;
     QString name;
+
+    int vote = -1; //1 for true, 0 for false, -1 initialize
 };
 
 #endif // PLAYERWINDOW_H

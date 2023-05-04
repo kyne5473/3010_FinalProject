@@ -44,6 +44,14 @@ playerWindow::playerWindow(int player, bool isFascist, QString n)
     resize(600,150);
 }
 
+void playerWindow::enableButtons(){
+    std::cout << "Enable";
+    yesButton->setStyleSheet("background-color: green; color:white;");
+    noButton->setStyleSheet("background-color: red; color:white;");
+    yesButton->setEnabled(true);
+    noButton->setEnabled(true);
+}
+
 void playerWindow::yesPressed(){
     yesButton->setStyleSheet("background-color: gray; color:white;");
     noButton->setStyleSheet("background-color: gray; color:white;");

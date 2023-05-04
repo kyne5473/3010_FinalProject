@@ -47,7 +47,12 @@ public:
 
     void increaseVote(){voteCount ++;};
 
+    void button1();
+    void button2();
+    void button3();
+
 private slots:
+
     void voteYes();
     void voteNo();
 
@@ -65,9 +70,19 @@ private:
 
     int voteCount = 0;
 
-    int preisdentIndex = -1;
+    int presidentIndex = 0;
 
     bool deck[17] = {0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1};
+
+    playerWindow* myWindow;
+
+    std::vector <bool> vote2;
+
+    QPushButton* buttonPress1;
+    QPushButton* buttonPress2;
+    QPushButton* buttonPress3;
+
+    std::vector <bool> output;
 
 };
 

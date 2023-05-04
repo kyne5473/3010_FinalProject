@@ -10,6 +10,8 @@ class playerWindow: public QWidget
 public:
     playerWindow(int player, bool isFascist, QString n);
     int getVote(){return vote;};
+public slots:
+    void enableButtons();
 signals:
     void yesPressed();
     void noPressed();

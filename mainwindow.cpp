@@ -96,13 +96,32 @@ MainWindow::MainWindow(QWidget *parent)
 
     //create a view for each player
     for(int i = 0; i < totalPlayers; i++){
-        playerWindow* myWindow = new playerWindow(i, playerRoles[i], playerNames[i]);
+        myWindow = new playerWindow(i, playerRoles[i], playerNames[i]);
         myWindow->setWindowTitle("Player: " + playerNames[i]);
         windows.push_back(myWindow);
         connect(myWindow, &playerWindow::yesPressed, this, &MainWindow::voteYes);
         connect(myWindow, &playerWindow::noPressed, this, &MainWindow::voteNo);
+        connect(ui->pushButton, &QPushButton::clicked, myWindow, &playerWindow::enableButtons);
         myWindow->show();
     }
+
+//    connect(popup, &QPushButton::pressed, this, &MainWindow::button1);
+//    connect(this, &MainWindow::buttonPress2, this, &MainWindow::button2);
+//    connect(this, &MainWindow::buttonPress3, this, &MainWindow::button3);
+
+    QDialog *popup = new QDialog;
+    popup->setWindowTitle("Vote");
+    popup->setFixedSize(200, 100);
+    QVBoxLayout *layout = new QVBoxLayout;
+    popup->setLayout(layout);
+    QString text = "Vote for Presidential candidate: " + getPlayerName(presidentIndex);
+    QLabel *label = new QLabel(text);
+    layout->addWidget(label);
+    setWindowFlag(Qt::WindowStaysOnTopHint);
+    popup->show();
+
+
+
 //    initiateVote();
 }
 
@@ -122,7 +141,7 @@ void MainWindow::voteNo(){
 }
 
 void MainWindow::gameLoop(){
-    preisdentIndex += 1;
+    presidentIndex += 1;
 //    initiateVote();
 //    showCards(showCards());
 //    playCard();
@@ -152,19 +171,103 @@ bool MainWindow::initiateVote(){
             voteNo();
         }
     }
-    std::cout << "Votingas: " << voteCount << std::endl;
     return true;
 }
 
 void MainWindow::playCard(){
 
 }
-
+void MainWindow::button1(){
+    std::cout << "button1 pressed";
+}
+void MainWindow::button2(){
+std::cout << "button2 pressed";
+}
+void MainWindow::button3(){
+std::cout << "button3 pressed";
+}
 
 void MainWindow::on_pushButton_clicked()
 {
     initiateVote();
+    if(voteCount >= 0){
+//        QDialog *popup = new QDialog;
+//        popup->setWindowTitle("Vote Passed");
+//        popup->setFixedSize(200, 100);
+//        QVBoxLayout *layout = new QVBoxLayout;
+//        popup->setLayout(layout);
+//        QString text = "Vote Passed. New President: " + getPlayerName(presidentIndex);
+//        QLabel *label = new QLabel(text);
+//        layout->addWidget(label);
+//        setWindowFlag(Qt::WindowStaysOnTopHint);
+//        popup->show();
+//        voteCount = 0;
 
+        //Do Something to president
+
+        //Determine card role
+
+        for(int i = 0; i < 3; i ++){
+            int temp = rand() % 10;
+            if(temp > 5){
+                output.push_back(false);
+            }else{
+                output.push_back(true);
+            }
+        }
+
+        QDialog *popup = new QDialog;
+        popup->setWindowTitle("Vote Passed");
+        popup->setFixedSize(200, 100);
+        QVBoxLayout *layout = new QVBoxLayout;
+        popup->setLayout(layout);
+
+        if(output[0] == false){
+            buttonPress1 = new QPushButton("Liberal");
+            buttonPress1->setStyleSheet("background-color: blue; color:white;");
+        }else{
+            buttonPress1 = new QPushButton("Facist");
+            buttonPress1->setStyleSheet("background-color: red; color:white;");
+        }
+        if(output[1] == false){
+            buttonPress2 = new QPushButton("Liberal");
+            buttonPress2->setStyleSheet("background-color: blue; color:white;");
+            layout->addWidget(buttonPress2);
+        }else{
+            buttonPress2 = new QPushButton("Facist");
+            buttonPress2->setStyleSheet("background-color: red; color:white;");
+        }
+        if(output[2] == false){
+            buttonPress3 = new QPushButton("Liberal");
+            buttonPress3->setStyleSheet("background-color: blue; color:white;");
+        }else{
+            buttonPress3 = new QPushButton("Facist");
+            buttonPress3->setStyleSheet("background-color: red; color:white;");
+        }
+
+        layout->addWidget(buttonPress1);
+        layout->addWidget(buttonPress2);
+        layout->addWidget(buttonPress3);
+        popup->setLayout(layout);
+        popup->show();
+        voteCount = 0;
+
+    } else{
+        presidentIndex ++;
+        presidentIndex %= 6;
+        voteCount = 0;
+        QDialog *popup = new QDialog;
+        popup->setWindowTitle("Vote Failed");
+        popup->setFixedSize(200, 100);
+        QVBoxLayout *layout = new QVBoxLayout;
+        popup->setLayout(layout);
+        QString text = "Vote Failed. Presidential candidate: " + getPlayerName(presidentIndex);
+        QLabel *label = new QLabel(text);
+        setWindowFlag(Qt::WindowStaysOnTopHint);
+        layout->addWidget(label);
+        popup->show();
+
+    }
     std::cout << "End: " << voteCount << std::endl;
     //Do something
     //Then reset voteCount to 0

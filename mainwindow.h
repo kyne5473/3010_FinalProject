@@ -6,6 +6,7 @@
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QPushButton>
+#include <QVBoxLayout>
 #include "playerwindow.h"
 
 
@@ -85,6 +86,8 @@ private:
     QPushButton* buttonPress3;
 
     std::vector <bool> output;
+
+    QVBoxLayout *layout;
 
 };
 

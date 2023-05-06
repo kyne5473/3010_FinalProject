@@ -74,6 +74,9 @@ MainWindow::MainWindow(QWidget *parent)
     liberalScene->addItem(liberalItem);
     liberalView->setScene(liberalScene);
 
+    QGraphicsRectItem* lib1 = new QGraphicsRectItem(0, 0, 1000, 1000); // create a rectangle item
+    lib1->setOpacity(0.5); // set its opacity to 50%
+
     QGraphicsView * facistView = ui->facistView;
     facistView->setStyleSheet("background: transparent");
     QPixmap pixmap2("C:/Users/kylen/OneDrive/Documents/Intensive Programming/FinalProject/secretHitler/facists.png");
@@ -178,13 +181,16 @@ void MainWindow::playCard(){
 
 }
 void MainWindow::button1(){
-    std::cout << "button1 pressed";
+    buttonPress1->setStyleSheet("background-color: gray; color:white;");
+    layout->removeWidget(buttonPress1);
 }
 void MainWindow::button2(){
-std::cout << "button2 pressed";
+    buttonPress2->setStyleSheet("background-color: gray; color:white;");
+    layout->removeWidget(buttonPress2);
 }
 void MainWindow::button3(){
-std::cout << "button3 pressed";
+    buttonPress3->setStyleSheet("background-color: gray; color:white;");
+    layout->removeWidget(buttonPress3);
 }
 
 void MainWindow::on_pushButton_clicked()
@@ -219,7 +225,7 @@ void MainWindow::on_pushButton_clicked()
         QDialog *popup = new QDialog;
         popup->setWindowTitle("Vote Passed");
         popup->setFixedSize(200, 100);
-        QVBoxLayout *layout = new QVBoxLayout;
+        layout = new QVBoxLayout;
         popup->setLayout(layout);
 
         if(output[0] == false){

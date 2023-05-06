@@ -48,6 +48,8 @@ public:
 
     void increaseVote(){voteCount ++;};
 
+    void endGame(bool w);
+
 
 
 private slots:
@@ -60,6 +62,9 @@ private slots:
     void voteNo();
 
     void on_pushButton_clicked();
+
+    void button12();
+    void button22();
 
 private:
     Ui::MainWindow *ui;
@@ -88,6 +93,31 @@ private:
     std::vector <bool> output;
 
     QVBoxLayout *layout;
+    QDialog *popup;
+
+    QDialog *popup2;
+
+    void popUp2();
+
+    int libs = 0;
+    int facs = 0;
+
+    QGraphicsScene* liberalScene;
+    QGraphicsScene* facistScene;
+
+    QGraphicsRectItem* libRect1;
+    QGraphicsRectItem* libRect2;
+    QGraphicsRectItem* libRect3;
+    QGraphicsRectItem* libRect4;
+    QGraphicsRectItem* libRect5;
+
+    QGraphicsRectItem* facRect1;
+    QGraphicsRectItem* facRect2;
+    QGraphicsRectItem* facRect3;
+    QGraphicsRectItem* facRect4;
+    QGraphicsRectItem* facRect5;
+    QGraphicsRectItem* facRect6;
+
 
 };
 

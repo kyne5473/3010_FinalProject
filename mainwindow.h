@@ -8,6 +8,7 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 #include "playerwindow.h"
+#include "card.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -30,7 +31,7 @@ public:
     QString getPlayerName(int index){return playerNames[index];};
 
     void addPlayerRole(QString name){playerNames.append(name);};
-    QString getPlayerRole(int index){return playerNames[index];};
+    bool getPlayerRole(int index){return playerRoles[index];};
 
     int currentPlayer = 0;
 
@@ -118,6 +119,8 @@ private:
     QGraphicsRectItem* facRect5;
     QGraphicsRectItem* facRect6;
 
+    FCard* fc;
+    LCard* lc;
 
 };
 

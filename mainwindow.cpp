@@ -19,6 +19,7 @@
 #include <QTimer>
 #include <vector>
 #include "playerwindow.h"
+#include "card.h"
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -75,27 +76,6 @@ MainWindow::MainWindow(QWidget *parent)
     liberalScene->addItem(liberalItem);
     liberalView->setScene(liberalScene);
 
-    libRect2 = new QGraphicsRectItem(153, 40, 80, 120);
-    libRect2->setBrush(QBrush(Qt::green));
-    libRect2->setZValue(-1);
-    liberalScene->addItem(libRect2);
-
-    libRect3 = new QGraphicsRectItem(241, 40, 80, 120);
-    libRect3->setBrush(QBrush(Qt::green));
-    libRect3->setZValue(-1);
-    liberalScene->addItem(libRect3);
-
-    libRect4 = new QGraphicsRectItem(330, 40, 80, 120);
-    libRect4->setBrush(QBrush(Qt::green));
-    libRect4->setZValue(-1);
-    liberalScene->addItem(libRect4);
-
-    libRect5 = new QGraphicsRectItem(417, 40, 80, 120);
-    libRect5->setBrush(QBrush(Qt::green));
-    libRect5->setZValue(-1);
-    liberalScene->addItem(libRect5);
-
-
     QGraphicsView * facistView = ui->facistView;
     facistView->setStyleSheet("background: transparent");
     QPixmap pixmap2("C:/Users/kylen/OneDrive/Documents/Intensive Programming/FinalProject/secretHitler/facists.png");
@@ -106,45 +86,6 @@ MainWindow::MainWindow(QWidget *parent)
     facistScene = new QGraphicsScene();
     facistScene->addItem(facistItem);
     facistView->setScene(facistScene);
-
-    facRect1 = new QGraphicsRectItem(15, 40, 80, 120);
-    facRect1->setBrush(QBrush(Qt::green));
-    facRect1->setZValue(-1);
-    facistScene->addItem(facRect1);
-
-    facRect2 = new QGraphicsRectItem(105, 40, 80, 120);
-    facRect2->setBrush(QBrush(Qt::green));
-    facRect2->setZValue(-1);
-    facistScene->addItem(facRect2);
-
-    facRect3 = new QGraphicsRectItem(195, 40, 80, 120);
-    facRect3->setBrush(QBrush(Qt::green));
-    facRect3->setZValue(-1);
-    facistScene->addItem(facRect3);
-
-    facRect4 = new QGraphicsRectItem(285, 40, 80, 120);
-    facRect4->setBrush(QBrush(Qt::green));
-    facRect4->setZValue(-1);
-    facistScene->addItem(facRect4);
-
-    facRect5 = new QGraphicsRectItem(375, 40, 80, 120);
-    facRect5->setBrush(QBrush(Qt::green));
-    facRect5->setZValue(-1);
-    facistScene->addItem(facRect5);
-
-    facRect6 = new QGraphicsRectItem(465, 40, 80, 120);
-    facRect6->setBrush(QBrush(Qt::green));
-    facRect6->setZValue(-1);
-    facistScene->addItem(facRect6);
-
-
-//    QWidget * wdg = new QWidget(this);
-//    QVBoxLayout *vlay = new QVBoxLayout(wdg);
-//    QPushButton *btn1 = new QPushButton("btn1");
-//    vlay->addWidget(btn1);
-////    wdg->setLayout(vlay);
-//    setCentralWidget(wdg);
-//    wdg->show();
 
     //create a view for each player
     for(int i = 0; i < totalPlayers; i++){
@@ -157,13 +98,9 @@ MainWindow::MainWindow(QWidget *parent)
         myWindow->show();
     }
 
-//    connect(buttonPress1, &QPushButton::clicked, this, &MainWindow::button1);
-//    connect(buttonPress2, &QPushButton::clicked, this, &MainWindow::button2);
-//    connect(buttonPress3, &QPushButton::clicked, this, &MainWindow::button3);
-
     QDialog *popup = new QDialog;
     popup->setWindowTitle("Vote");
-    popup->setFixedSize(200, 100);
+//    popup->setFixedSize(200, 100);
     QVBoxLayout *layout = new QVBoxLayout;
     popup->setLayout(layout);
     QString text = "Vote for Presidential candidate: " + getPlayerName(presidentIndex);
@@ -171,7 +108,8 @@ MainWindow::MainWindow(QWidget *parent)
     layout->addWidget(label);
     setWindowFlag(Qt::WindowStaysOnTopHint);
     popup->show();
-
+    fc = new FCard();
+    lc = new LCard();
 
 
 //    initiateVote();
@@ -183,12 +121,10 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::voteYes(){
-    //Only gets called in initiateVote()
     voteCount++;
 }
 
 void MainWindow::voteNo(){
-    //Only gets called in initiateVote()
     voteCount--;
 }
 
@@ -197,7 +133,7 @@ void MainWindow::gameLoop(){
 //    initiateVote();
 //    showCards(showCards());
 //    playCard();
-    std::cout << "Vote in loop: " << voteCount << std::endl;
+//    std::cout << "Vote in loop: " << voteCount << std::endl;
 }
 
 int MainWindow::showCards(){
@@ -228,73 +164,108 @@ bool MainWindow::initiateVote(){
 
 void MainWindow::playCard(){
     if(!output[0]){
+        std::cout<<"Placing lib";
+        QGraphicsPixmapItem* libCardItem = lc->getCard(); //FLYWEIGHT HERE
         if(libs == 0){
-            QPixmap pixCard("C:/Users/kylen/OneDrive/Documents/Intensive Programming/FinalProject/secretHitler/libCard.png");
-            QGraphicsPixmapItem* libCardItem = new QGraphicsPixmapItem(pixCard);
             libCardItem->setPos(65, 45);
             libCardItem->setScale(0.43);
             liberalScene->addItem(libCardItem);
         } else if(libs == 1){
-            QPixmap pixCard("C:/Users/kylen/OneDrive/Documents/Intensive Programming/FinalProject/secretHitler/libCard.png");
-            QGraphicsPixmapItem* libCardItem = new QGraphicsPixmapItem(pixCard);
+            liberalScene->addItem(libCardItem);
             libCardItem->setPos(153, 45);
             libCardItem->setScale(0.43);
-            liberalScene->addItem(libCardItem);
         } else if(libs == 2){
-            QPixmap pixCard("C:/Users/kylen/OneDrive/Documents/Intensive Programming/FinalProject/secretHitler/libCard.png");
-            QGraphicsPixmapItem* libCardItem = new QGraphicsPixmapItem(pixCard);
+            liberalScene->addItem(libCardItem);
             libCardItem->setPos(241, 45);
             libCardItem->setScale(0.43);
-            liberalScene->addItem(libCardItem);
         } else if (libs == 3){
-            QPixmap pixCard("C:/Users/kylen/OneDrive/Documents/Intensive Programming/FinalProject/secretHitler/libCard.png");
-            QGraphicsPixmapItem* libCardItem = new QGraphicsPixmapItem(pixCard);
+            liberalScene->addItem(libCardItem);
             libCardItem->setPos(330, 45);
             libCardItem->setScale(0.43);
-            liberalScene->addItem(libCardItem);
         } else {
-            QPixmap pixCard("C:/Users/kylen/OneDrive/Documents/Intensive Programming/FinalProject/secretHitler/libCard.png");
-            QGraphicsPixmapItem* libCardItem = new QGraphicsPixmapItem(pixCard);
+            liberalScene->addItem(libCardItem);
             libCardItem->setPos(417, 45);
             libCardItem->setScale(0.43);
-            liberalScene->addItem(libCardItem);
             endGame(true);
         }
         libs++;
     } else {
+        std::cout<<"Placing fac";
+        QGraphicsPixmapItem* facCardItem = fc->getCard();
         if(facs == 0){
-            QPixmap pixCard("C:/Users/kylen/OneDrive/Documents/Intensive Programming/FinalProject/secretHitler/facCard.png");
-            QGraphicsPixmapItem* facCardItem = new QGraphicsPixmapItem(pixCard);
             facCardItem->setPos(15, 45);
             facCardItem->setScale(0.43);
             facistScene->addItem(facCardItem);
         } else if(facs == 1){
-            QPixmap pixCard("C:/Users/kylen/OneDrive/Documents/Intensive Programming/FinalProject/secretHitler/facCard.png");
-            QGraphicsPixmapItem* facCardItem = new QGraphicsPixmapItem(pixCard);
             facCardItem->setPos(105, 45);
             facCardItem->setScale(0.43);
             facistScene->addItem(facCardItem);
+
+            int temp = rand() % totalPlayers;
+
+                    QDialog *popup = new QDialog;
+                    popup->setWindowTitle("Role of Random Player");
+                        popup->setFixedSize(1300, 600);
+                    popup->setStyleSheet("font-size:40px;");
+                    QVBoxLayout *layout = new QVBoxLayout;
+                    popup->setLayout(layout);
+                    QString role;
+                    if(getPlayerRole(temp)){
+                        role = " facist";
+                    }else{
+                        role = " liberal";
+                    }
+                    QString text = "Player " + getPlayerName(temp) + " has the role of: " + role;
+                    QLabel *label = new QLabel(text);
+                    label->setAlignment(Qt::AlignCenter);
+                    layout->addWidget(label);
+                    setWindowFlag(Qt::WindowStaysOnTopHint);
+                    popup->show();
+
+
         } else if(facs == 2){
-            QPixmap pixCard("C:/Users/kylen/OneDrive/Documents/Intensive Programming/FinalProject/secretHitler/facCard.png");
-            QGraphicsPixmapItem* facCardItem = new QGraphicsPixmapItem(pixCard);
             facCardItem->setPos(195, 45);
             facCardItem->setScale(0.43);
             facistScene->addItem(facCardItem);
+
+            int temp = rand() % totalPlayers;
+
+            QDialog *popup = new QDialog;
+            popup->setWindowTitle("Role of Random Player");
+            popup->setFixedSize(1300, 600);
+            popup->setStyleSheet("font-size:40px;");
+            QVBoxLayout *layout = new QVBoxLayout;
+            popup->setLayout(layout);
+            QString role;
+            if(getPlayerRole(temp)){
+                        role = " facist";
+            }else{
+                        role = " liberal";
+            }
+            QString text = "Player " + getPlayerName(temp) + " has the role of: " + role;
+            QLabel *label = new QLabel(text);
+            label->setAlignment(Qt::AlignCenter);
+            layout->addWidget(label);
+
+            setWindowFlag(Qt::WindowStaysOnTopHint);
+            popup->show();
+
         } else if (facs == 3){
-            QPixmap pixCard("C:/Users/kylen/OneDrive/Documents/Intensive Programming/FinalProject/secretHitler/facCard.png");
-            QGraphicsPixmapItem* facCardItem = new QGraphicsPixmapItem(pixCard);
             facCardItem->setPos(285, 45);
             facCardItem->setScale(0.43);
             facistScene->addItem(facCardItem);
+            int temp = rand() % totalPlayers;
+            windows[temp]->close();
+            totalPlayers --;
+
         } else if(facs == 4){
-            QPixmap pixCard("C:/Users/kylen/OneDrive/Documents/Intensive Programming/FinalProject/secretHitler/facCard.png");
-            QGraphicsPixmapItem* facCardItem = new QGraphicsPixmapItem(pixCard);
             facCardItem->setPos(375, 45);
             facCardItem->setScale(0.43);
             facistScene->addItem(facCardItem);
+            int temp = rand() % totalPlayers;
+            windows[temp]->close();
+            totalPlayers --;
         } else {
-            QPixmap pixCard("C:/Users/kylen/OneDrive/Documents/Intensive Programming/FinalProject/secretHitler/facCard.png");
-            QGraphicsPixmapItem* facCardItem = new QGraphicsPixmapItem(pixCard);
             facCardItem->setPos(465, 45);
             facCardItem->setScale(0.43);
             facistScene->addItem(facCardItem);
@@ -453,7 +424,7 @@ void MainWindow::on_pushButton_clicked()
         voteCount = 0;
         QDialog *popup = new QDialog;
         popup->setWindowTitle("Vote Failed");
-        popup->setFixedSize(200, 100);
+//        popup->setFixedSize(400, 200);
         QVBoxLayout *layout = new QVBoxLayout;
         popup->setLayout(layout);
         QString text = "Vote Failed. Presidential candidate: " + getPlayerName(presidentIndex);

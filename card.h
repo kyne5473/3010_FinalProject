@@ -1,18 +1,48 @@
 #ifndef CARD_H
 #define CARD_H
 
+#include <QGraphicsItem>
 
-class card
-{
+class Card {
 public:
-    card(int powerUp, bool isFascist){this->powerUp = powerUp; fascist = isFascist;}
-    int getPowerUp(){return powerUp;}
-    void setPowerUp(int i){powerUp = i;}
-    bool isFascist(){return fascist;}
-    void setFasctist(){fascist=true;}
+    Card(){};
+    void setCard(QGraphicsPixmapItem* p){card = p;}
+    virtual QGraphicsPixmapItem* getCard(){return card;};
 private:
-    bool fascist;
-    int powerUp;
+    QGraphicsPixmapItem* card;
 };
 
 #endif // CARD_H
+
+#ifndef FCARD_H
+#define FCARD_H
+
+#include <QGraphicsItem>
+
+class FCard : public Card{
+public:
+    FCard();
+
+    virtual QGraphicsPixmapItem* getCard() override {return card;};
+private:
+    QGraphicsPixmapItem* card;
+};
+
+#endif // CARD_F
+
+#ifndef LCARD_H
+#define LCARD_H
+
+#include <QGraphicsItem>
+
+class LCard : public Card{
+public:
+    LCard();
+
+    virtual QGraphicsPixmapItem* getCard() override {return card;};
+private:
+    QGraphicsPixmapItem* card;
+};
+
+#endif // CARD_L
+
